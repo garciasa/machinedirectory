@@ -1,0 +1,7 @@
+{
+  "name": "client",
+  "version": "0.0.1",
+  "description": "Ui for machinedirectory app",
+  "main": "index.js",
+  "license": "MIT"
+}
