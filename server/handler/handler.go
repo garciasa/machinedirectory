@@ -11,8 +11,8 @@ import (
 
 type response struct {
 	Success bool        `json:"success"`
-	Error   string      `json:"error"`
-	Data    interface{} `json:"response"`
+	Error   string      `json:"error,omitempty"`
+	Data    interface{} `json:"response,omitempty"`
 }
 
 func dBMiddleware(d database.Database) gin.HandlerFunc {
