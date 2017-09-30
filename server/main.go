@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
-	"machinedirectory/server/handler"
-	"machinedirectory/server/storage/database"
+	"github.com/garciasa/machinedirectory/server/handler"
+	"github.com/garciasa/machinedirectory/server/storage/database"
 )
 
 func main() {
@@ -12,10 +12,10 @@ func main() {
 		fmt.Println("Error", err)
 	}
 
+	//service.CreateStructure()
 	server := handler.New(service)
 	server.Run(":5555")
 
-	// service.CreateStructure()
 
 	// test := storage.Item{
 	// 	IP:         "192.168.12.1",

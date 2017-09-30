@@ -2,8 +2,8 @@ package handler
 
 import (
 	"fmt"
-	"machinedirectory/server/storage"
-	"machinedirectory/server/storage/database"
+	"github.com/garciasa/machinedirectory/server/storage"
+	"github.com/garciasa/machinedirectory/server/storage/database"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
