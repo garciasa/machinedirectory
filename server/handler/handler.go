@@ -20,6 +20,8 @@ type response struct {
 
 func dBMiddleware(d database.Database) gin.HandlerFunc {
 	return func(c *gin.Context) {
+		c.Writer.Header().Set("Content-Type", "application/json")
+		c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 		c.Set("dbConn", d.Db)
 		c.Next()
 	}
@@ -102,7 +104,7 @@ func searchByTags(c *gin.Context) {
 	tags := html.EscapeString(c.Params.ByName("tags"))
 
 	var items []storage.Item
-	err := db.Where("tags LIKE ?", "%"+tags+"%").Find(&items).Error
+	err := db.Where("tags LIKE ? or domain_name LIKE ?", "%"+tags+"%", "%"+tags+"%").Find(&items).Error
 	if err != nil {
 		fmt.Println(err)
 		c.JSON(200, &response{Success: false, Error: "Something was wrong :("})

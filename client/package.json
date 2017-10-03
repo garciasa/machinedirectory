@@ -2,27 +2,31 @@
   "name": "client",
   "version": "0.0.1",
   "description": "Ui for machinedirectory app",
-  "main": "index.js",
+  "main": "src/index.js",
   "license": "MIT",
   "scripts": {
-    "start": "cross-env NODE_ENV=development webpack-dev-server --progress --hot --inline --history-api-fallback src/index"
+    "build:dev": "webpack -p --config webpack/webpack.config.js --progress --colors ",
+    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --config webpack/webpack.config.js --progress --hot --inline --history-api-fallback "
   },
   "dependencies": {
+    "prop-types": "^15.6.0",
     "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react-dom": "^16.0.0",
+    "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.1",
     "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
     "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1",
+    "babel-preset-stage-1": "^6.24.1",
     "cross-env": "^5.0.5",
     "css-loader": "^0.28.7",
     "eslint": "^4.8.0",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-plugin-import": "^2.7.0",
-    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-jsx-a11y": "5.1.1",
     "eslint-plugin-react": "^7.4.0",
     "extract-text-webpack-plugin": "^3.0.0",
     "style-loader": "^0.18.2",
