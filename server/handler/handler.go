@@ -2,6 +2,9 @@ package handler
 
 import (
 	"fmt"
+	"html"
+	"net/http"
+
 	"github.com/garciasa/machinedirectory/server/storage"
 	"github.com/garciasa/machinedirectory/server/storage/database"
 
@@ -45,10 +48,10 @@ func getAllItems(c *gin.Context) {
 
 	var items []storage.Item
 	if err := db.Find(&items).Error; err != nil {
-		c.JSON(200, &response{Success: false})
+		c.JSON(http.StatusOK, &response{Success: false})
 		return
 	}
-	c.JSON(200, &response{Success: true, Data: items})
+	c.JSON(http.StatusOK, &response{Success: true, Data: items})
 }
 func getItem(c *gin.Context) {
 	db, ok := c.MustGet("dbConn").(*gorm.DB)
@@ -57,13 +60,13 @@ func getItem(c *gin.Context) {
 		return
 	}
 
-	id := c.Params.ByName("id")
+	id := html.EscapeString(c.Params.ByName("id"))
 	var item storage.Item
 	if err := db.Where("id = ?", id).First(&item).Error; err != nil {
-		c.JSON(200, &response{Success: false})
+		c.JSON(http.StatusOK, &response{Success: false})
 		return
 	}
-	c.JSON(200, &response{Success: true, Data: item})
+	c.JSON(http.StatusOK, &response{Success: true, Data: item})
 }
 
 func createItem(c *gin.Context) {
@@ -73,9 +76,9 @@ func createItem(c *gin.Context) {
 		return
 	}
 	item := storage.Item{
-		IP:         c.PostForm("ip"),
-		DomainName: c.PostForm("domainname"),
-		Tags:       c.PostForm("tags"),
+		IP:         html.EscapeString(c.PostForm("ip")),
+		DomainName: html.EscapeString(c.PostForm("domainname")),
+		Tags:       html.EscapeString(c.PostForm("tags")),
 		Deleted:    false,
 	}
 
@@ -96,7 +99,7 @@ func searchByTags(c *gin.Context) {
 		c.AbortWithStatus(505)
 		return
 	}
-	tags := c.Params.ByName("tags")
+	tags := html.EscapeString(c.Params.ByName("tags"))
 
 	var items []storage.Item
 	err := db.Where("tags LIKE ?", "%"+tags+"%").Find(&items).Error

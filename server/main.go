@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+
 	"github.com/garciasa/machinedirectory/server/handler"
 	"github.com/garciasa/machinedirectory/server/storage/database"
 )
@@ -15,7 +16,6 @@ func main() {
 	//service.CreateStructure()
 	server := handler.New(service)
 	server.Run(":5555")
-
 
 	// test := storage.Item{
 	// 	IP:         "192.168.12.1",
