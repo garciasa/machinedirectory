@@ -8,7 +8,15 @@ function Search({ onChange }) {
     onChange(e.target.value);
   }
 
-  return <input type="text" placeholder="search" onChange={handleChange} />;
+  return (
+    <div className="search-box">
+      <div className="sb-container">
+        <span className="icon"><i className="fa fa-search" /></span>
+        <input type="text" className="search" placeholder="search..." onChange={handleChange} />
+        <span className="icon"><i className="fa fa-plus" /></span>
+      </div>
+    </div>
+  );
 }
 
 Search.propTypes = {

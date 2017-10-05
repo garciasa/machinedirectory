@@ -18,6 +18,9 @@ class App extends React.Component {
       this.setState({ items: [] });
       return;
     }
+
+
+    // TODO: Wrap this into API object
     fetch(`http://localhost:3000/items/${tags}`)
       .then((response) => {
         return response.json();
@@ -33,9 +36,8 @@ class App extends React.Component {
   render() {
     const { items } = this.state;
     return (
-      <div>
+      <div id="wrapper">
         <Search onChange={this.handleSearch} />
-        <br />
         <ListResults results={items} />
       </div>
     );
