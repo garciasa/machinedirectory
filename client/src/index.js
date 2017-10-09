@@ -1,8 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
-import App from './App';
+import Home from './App';
+import Add from './Add';
 
 ReactDOM.render(
-  <App />
+  <BrowserRouter>
+    <Switch>
+      <Route exact path="/" component={Home} />
+      <Route exact path="/add" component={Add} />
+    </Switch>
+  </BrowserRouter>
   , document.getElementById('app'));

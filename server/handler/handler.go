@@ -18,6 +18,12 @@ type response struct {
 	Data    interface{} `json:"response,omitempty"`
 }
 
+type saveCommand struct {
+	IP         string `json:"ip"`
+	DomainName string `json:"domainname"`
+	Tags       string `json:"tags"`
+}
+
 func dBMiddleware(d database.Database) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		c.Writer.Header().Set("Content-Type", "application/json")
@@ -77,10 +83,13 @@ func createItem(c *gin.Context) {
 		c.AbortWithStatus(505)
 		return
 	}
+
+	var sc saveCommand
+	c.BindJSON(&sc)
 	item := storage.Item{
-		IP:         html.EscapeString(c.PostForm("ip")),
-		DomainName: html.EscapeString(c.PostForm("domainname")),
-		Tags:       html.EscapeString(c.PostForm("tags")),
+		IP:         html.EscapeString(sc.IP),
+		DomainName: html.EscapeString(sc.DomainName),
+		Tags:       html.EscapeString(sc.Tags),
 		Deleted:    false,
 	}
 

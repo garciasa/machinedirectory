@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+// TODO: rewrite tags
 function ListResults({ results }) {
   const renderList = () => {
     return (

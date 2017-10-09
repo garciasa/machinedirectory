@@ -1,8 +1,8 @@
 import React from 'react';
-import 'whatwg-fetch';
 
 import Search from './Search';
 import ListResults from './ListResults';
+import * as Api from './Api';
 
 class App extends React.Component {
   constructor(props) {
@@ -18,18 +18,9 @@ class App extends React.Component {
       this.setState({ items: [] });
       return;
     }
-
-
-    // TODO: Wrap this into API object
-    fetch(`http://localhost:3000/items/${tags}`)
-      .then((response) => {
-        return response.json();
-      })
-      .then((json) => {
-        this.setState({ items: json.response });
-      })
-      .catch((err) => {
-        console.log(err);
+    Api.getItems(tags)
+      .then((data) => {
+        this.setState({ items: data.response });
       });
   }
 
