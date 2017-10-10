@@ -50,13 +50,13 @@ func New(d database.Database) *gin.Engine {
 func getAllItems(c *gin.Context) {
 	db, ok := c.MustGet("dbConn").(*gorm.DB)
 	if !ok {
-		c.AbortWithStatus(505)
+		c.AbortWithStatus(http.StatusInternalServerError)
 		return
 	}
 
 	var items []storage.Item
 	if err := db.Find(&items).Error; err != nil {
-		c.JSON(http.StatusOK, &response{Success: false})
+		c.JSON(http.StatusInternalServerError, &response{Success: false})
 		return
 	}
 	c.JSON(http.StatusOK, &response{Success: true, Data: items})
@@ -64,14 +64,14 @@ func getAllItems(c *gin.Context) {
 func getItem(c *gin.Context) {
 	db, ok := c.MustGet("dbConn").(*gorm.DB)
 	if !ok {
-		c.AbortWithStatus(505)
+		c.AbortWithStatus(http.StatusInternalServerError)
 		return
 	}
 
 	id := html.EscapeString(c.Params.ByName("id"))
 	var item storage.Item
 	if err := db.Where("id = ?", id).First(&item).Error; err != nil {
-		c.JSON(http.StatusOK, &response{Success: false})
+		c.JSON(http.StatusInternalServerError, &response{Success: false})
 		return
 	}
 	c.JSON(http.StatusOK, &response{Success: true, Data: item})
@@ -80,7 +80,7 @@ func getItem(c *gin.Context) {
 func createItem(c *gin.Context) {
 	db, ok := c.MustGet("dbConn").(*gorm.DB)
 	if !ok {
-		c.AbortWithStatus(505)
+		c.AbortWithStatus(http.StatusInternalServerError)
 		return
 	}
 
@@ -95,19 +95,19 @@ func createItem(c *gin.Context) {
 
 	if err := db.Save(&item).Error; err != nil {
 		fmt.Println(err.Error())
-		c.JSON(200, &response{Success: false, Error: "Something was wrong :("})
+		c.JSON(http.StatusInternalServerError, &response{Success: false, Error: "Something was wrong :("})
 
 		return
 	}
 
-	c.JSON(200, &response{Success: true, Data: &item})
+	c.JSON(http.StatusOK, &response{Success: true, Data: &item})
 
 }
 
 func searchByTags(c *gin.Context) {
 	db, ok := c.MustGet("dbConn").(*gorm.DB)
 	if !ok {
-		c.AbortWithStatus(505)
+		c.AbortWithStatus(http.StatusInternalServerError)
 		return
 	}
 	tags := html.EscapeString(c.Params.ByName("tags"))
@@ -116,12 +116,12 @@ func searchByTags(c *gin.Context) {
 	err := db.Where("tags LIKE ? or domain_name LIKE ?", "%"+tags+"%", "%"+tags+"%").Find(&items).Error
 	if err != nil {
 		fmt.Println(err)
-		c.JSON(200, &response{Success: false, Error: "Something was wrong :("})
+		c.JSON(http.StatusInternalServerError, &response{Success: false, Error: "Something was wrong :("})
 
 		return
 	}
 
-	c.JSON(200, &response{Success: true, Data: &items})
+	c.JSON(http.StatusOK, &response{Success: true, Data: &items})
 
 }
 
