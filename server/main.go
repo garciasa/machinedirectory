@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	service, err := database.New("root", "root", "gotest")
+	service, err := database.New("root", "root", "gotest", "mysql")
 	if err != nil {
 		fmt.Println("Error", err)
 	}
@@ -16,18 +16,5 @@ func main() {
 	//service.CreateStructure()
 	server := handler.New(service)
 	server.Run(":5555")
-
-	// test := storage.Item{
-	// 	IP:         "192.168.12.1",
-	// 	DomainName: "tstblab.edenirenland.com",
-	// 	Deleted:    false,
-	// 	Tags:       "crm, staging, pepe",
-	// }
-
-	// fmt.Println(test)
-
-	// if err := service.Create(&test); err != nil {
-	// 	fmt.Printf("Error: %s", err)
-	// }
 
 }
