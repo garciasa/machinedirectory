@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	service, err := database.New("root", "root", "gotest", "mysql")
+	service, err := database.New("root", "root", "gotest", "sqlite")
 	if err != nil {
 		fmt.Println("Error", err)
 	}

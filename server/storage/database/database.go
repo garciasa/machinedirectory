@@ -8,9 +8,9 @@ import (
 
 	"github.com/jinzhu/gorm"
 	// Driver for mysql backend
-	_ "github.com/jinzhu/gorm/dialects/mysql"
+	//_ "github.com/jinzhu/gorm/dialects/mysql"
 	// Driver for sqlite backed
-	// _ "github.com/jinzhu/gorm/dialects/sqlite"
+	_ "github.com/jinzhu/gorm/dialects/sqlite"
 )
 
 // Database Type for store database structure
